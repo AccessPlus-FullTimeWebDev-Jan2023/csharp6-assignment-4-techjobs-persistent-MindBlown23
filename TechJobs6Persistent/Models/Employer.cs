@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
+
 namespace TechJobs6Persistent.Models
 {
     public class Employer
@@ -7,7 +9,7 @@ namespace TechJobs6Persistent.Models
         public string Name { get; set; }
         public string Location { get; set; }
 
-
+        public List<Job> Jobs { get; set; }
         public Employer(string name, string location)
         {
             Name = name;
@@ -16,6 +18,7 @@ namespace TechJobs6Persistent.Models
 
         public Employer()
         {
+            
         }
     }
 }

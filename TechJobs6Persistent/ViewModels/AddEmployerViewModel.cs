@@ -10,8 +10,5 @@ namespace TechJobs6Persistent.ViewModels
         [Required]
         [StringLength(50,MinimumLength = 10)]
         public string? Location { get; set;}
-
-
-
     }
 }

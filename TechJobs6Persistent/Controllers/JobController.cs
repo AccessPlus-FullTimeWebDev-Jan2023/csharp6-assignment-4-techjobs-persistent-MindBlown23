@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TechJobs6Persistent.Data;
 using TechJobs6Persistent.Models;
 using TechJobs6Persistent.ViewModels;
@@ -31,14 +32,32 @@ namespace TechJobs6Persistent.Controllers
 
         public IActionResult Add()
         {
-            return View();
+            AddJobViewModel viewModel = new AddJobViewModel(context.Employers.ToList());      
+            return View(viewModel);     
         }
 
-        [HttpPost]
-        public IActionResult ProcessAddJobForm()
-        {
-            return View();
-        }
+       
+        
+            [HttpPost]
+            public IActionResult Add(AddJobViewModel addJobViewModel)
+            {
+                if (ModelState.IsValid)
+                {
+                Employer employer = context.Employers.Find(addJobViewModel.EmployersId);
+                Job newJob = new Job
+                {
+                    Name = addJobViewModel.Name,
+                    Employer = employer
+                };
+
+                    context.Jobs.Add(newJob);
+                    context.SaveChanges();
+
+                    return Redirect("/Job");
+                }
+
+                return View(addJobViewModel);
+            }
 
         public IActionResult Delete()
         {
